@@ -1,1 +1,11 @@
-@import 'bootstrap/dist/css/bootstrap.min.css';
+.app-container {
+    display: flex;
+}
+
+.content {
+    width: 100%;
+}
+
+.sidebar {
+    height: 800px;
+}

@@ -7,20 +7,45 @@ export const PostList = createContext({
 });
 
 const postListreducer = (currPostList, action) => {
-  return currPostList;
+  let newPostList = currPostList;
+  if (action.type === "DELETE_POST") {
+    newPostList = currPostList.filter(
+      (post) => post.id != action.payload.postId
+    );
+  } else if (action.type === "ADD_POST") {
+    newPostList = [action.payload, ...currPostList]
+  }
+  return newPostList;
 }
 
-const PostListProvider = (children) => {
+const PostListProvider = ({ children }) => {
 
   const [postList, DispatchPostList] = useReducer(postListreducer, DEFAULT_POST_LIST);
 
-  const addPost = () => {
+  const addPost = (userId, postTite, postBody, reactions, tags) => {
+    DispatchPostList({
+      type: "Edit_POST",
+      payload: {
+        id: Date.now(),
+        title: userId,
+        body: postTite,
+        reactions: postBody,
+        userId: reactions,
+        tags: tags,
+      }})
+  }
+
+  const deletePost = (postId) => {
+    // console.log(`Delete post called for: ${postId}`);
+    DispatchPostList({
+      type: "DELETE_POST",
+      payload: {
+        postId,
+      }
+    })
 
   }
 
-  const deletePost = () => {
-
-  }
 
   return (
     <>
@@ -31,14 +56,15 @@ const PostListProvider = (children) => {
   )
 }
 
-const DEFAULT_POST_LIST = [{
-  id: "1",
-  title: "Going to Kashmir",
-  body: "Hi friends, I am going to kashmir for my vacations. Hope to enjoy a lot. Peace out.",
-  reactions: 2,
-  userId: "Azka",
-  tags: ["vacation", "Kashmir", "enjoy"],
-},
+const DEFAULT_POST_LIST = [
+//   {
+//   id: "1",
+//   title: "Going to Kashmir",
+//   body: "Hi friends, I am going to kashmir for my vacations. Hope to enjoy a lot. Peace out.",
+//   reactions: 2,
+//   userId: "Azka",
+//   tags: ["vacation", "Kashmir", "enjoy"],
+// },
 {
   id: "2",
   title: "Graduation complete",

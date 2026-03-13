@@ -24,7 +24,7 @@ const PostListProvider = ({ children }) => {
 
   const addPost = (userId, postTite, postBody, reactions, tags) => {
     DispatchPostList({
-      type: "Edit_POST",
+      type: "ADD_POST",
       payload: {
         id: Date.now(),
         title: userId,
